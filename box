@@ -1,0 +1,27 @@
+name: RiverSea High-Value Miner
+on:
+  schedule:
+    - cron: '0 * * * *' 
+  workflow_dispatch:     
+permissions:
+  contents: write
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Dependencies
+        run: pip install requests
+      - name: Run Engine
+        run: python scraper.py
+      - name: Secure Assets
+        run: |
+          git config --local user.email "bot@riversea.com"
+          git config --local user.name "RiverSea-Bot"
+          git add .
+          git commit -m "💎 Data Secured" || exit 0
+          git push

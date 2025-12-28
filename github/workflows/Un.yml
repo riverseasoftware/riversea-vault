@@ -1,0 +1,21 @@
+name: RiverSea-Miner
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Scraper
+        run: |
+          pip install requests
+          python scraper.py
+      - name: Save Data
+        run: |
+          git config --local user.email "bot@riversea.com"
+          git config --local user.name "RiverSea-Bot"
+          git add .
+          git commit -m "New Assets" || exit 0
+          git push

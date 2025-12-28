@@ -1,0 +1,10 @@
+name: RiverSea-Miner
+on:
+  workflow_dispatch:
+jobs:
+  run-mining:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run
+        run: python scraper.py
